@@ -1,7 +1,7 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+<script setup>
+import HelloWorld from "./components/HelloWorld.vue";
 
-console.log("[App.vue]", `Hello world from Electron ${process.versions.electron}!`)
+console.log("[App.vue]", `Hello world from Electron ${process.versions.electron}!`);
 </script>
 
 <template>
@@ -19,7 +19,7 @@ console.log("[App.vue]", `Hello world from Electron ${process.versions.electron}
   <HelloWorld msg="Electron + Vite + Vue" />
   <div class="flex-center">
     Place static files into the <code>/public</code> folder
-    <img style="width:5em;" src="/node.svg" alt="Node logo">
+    <img style="width: 5em" src="/node.svg" alt="Node logo" />
   </div>
 </template>
 
@@ -38,7 +38,7 @@ console.log("[App.vue]", `Hello world from Electron ${process.versions.electron}
 }
 
 .logo.electron:hover {
-  filter: drop-shadow(0 0 2em #9FEAF9);
+  filter: drop-shadow(0 0 2em #9feaf9);
 }
 
 .logo:hover {
