@@ -5,6 +5,14 @@ import electron from "vite-plugin-electron";
 import renderer from "vite-plugin-electron-renderer";
 import pkg from "./package.json";
 
+import Components from "unplugin-vue-components/vite";
+import AutoImport from "unplugin-auto-import/vite";
+import Icons from "unplugin-icons/vite";
+import IconsResolver from "unplugin-icons/resolver";
+import Pages from "vite-plugin-pages";
+import Layouts from "vite-plugin-vue-layouts";
+import {ElementPlusResolver} from "unplugin-vue-components/resolvers";
+
 // https://vitejs.dev/config/
 export default defineConfig(({command}) => {
   rmSync("dist-electron", {recursive: true, force: true});
@@ -61,6 +69,30 @@ export default defineConfig(({command}) => {
       renderer({
         nodeIntegration: true,
       }),
+      Components({
+        // allow auto load markdown components under `./src/components/`
+        extensions: ["vue", "md"],
+        // allow auto import and register components used in markdown
+        include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
+        resolvers: [ElementPlusResolver(), IconsResolver({prefix: "icon", enabledCollections: ["carbon"]})],
+      }),
+      AutoImport({
+        include: [
+          /\.vue$/,
+          /\.vue\?vue/, // .vue
+        ],
+        imports: ["vue", "vue-router", "pinia"],
+        //自动引入文件夹
+        dirs: ["./src/composables"],
+        resolvers: [ElementPlusResolver(), IconsResolver()],
+      }),
+      Icons({
+        autoInstall: true, //在icon引入时，将自动安装图标集。自动探测项目使用的是npm,yarn,还是pnpm
+      }),
+      Pages({
+        extensions: ["vue", "md"],
+      }),
+      Layouts(),
     ],
     server:
       process.env.VSCODE_DEBUG &&
